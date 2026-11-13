@@ -20,7 +20,7 @@ public class ContractService {
     public void processContract(Contract contract, Integer months){
         double valueContract = contract.getTotalValue();
         double installmentInitialValue = valueContract / months;
-        List<Installment> installments = new ArrayList<>();
+        //List<Installment> installments = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -33,10 +33,10 @@ public class ContractService {
 
             dueDate.setMonth(dueDate.getMonth()+i);
 
-            installments.add(new Installment(dueDate, finalValueInstallment));
-
+            //installments.add(new Installment(dueDate, finalValueInstallment));
+            contract.getInstallments().add(new Installment(dueDate, finalValueInstallment));
         }
-        contract.setInstallments(installments);
+        //contract.setInstallments(installments);
     }
 
 }
