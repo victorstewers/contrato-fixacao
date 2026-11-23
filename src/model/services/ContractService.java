@@ -24,19 +24,23 @@ public class ContractService {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        for(int i = 1; i<=months;i++){
+        for (int i = 1; i<=months;i++) {
             double installmentValueInterest = onlinePaymentService.interest((installmentInitialValue),i);
             double installmentPaymentFee = onlinePaymentService.paymentFee(installmentInitialValue + installmentValueInterest );
             double finalValueInstallment =  installmentInitialValue + installmentPaymentFee + installmentValueInterest;
 
-            Date dueDate = new Date(contract.getDate().getTime());
+            Date dueDate = addMonths(contract.getDate(),i);
 
-            dueDate.setMonth(dueDate.getMonth()+i);
+            //dueDate.setMonth(dueDate.getMonth()+i);
 
-            //installments.add(new Installment(dueDate, finalValueInstallment));
             contract.getInstallments().add(new Installment(dueDate, finalValueInstallment));
         }
-        //contract.setInstallments(installments);
+    }
+    private Date addMonths(Date date, int N){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, N);
+        return calendar.getTime();
     }
 
 }
